@@ -2,12 +2,12 @@ import sys
 import pygame
 
 tile_images = {
-    'wall': pygame.image.load('box.png'),
-    'empty': pygame.image.load('grass.png'),
-    'hole': pygame.image.load('hole.png')
+    'wall': pygame.image.load('wall.png'),
+    'empty': pygame.image.load('grass2.png'),
+    'hole': pygame.image.load('hole2.png')
 }
-ball_image = pygame.image.load('ball.png')
-ball_in_hole_image = pygame.image.load('ball_in_hole.png')
+ball_image = pygame.image.load('mouse.png')
+ball_in_hole_image = pygame.image.load('mouse_in_hole.png')
 
 tile_width = tile_height = 50
 
@@ -116,7 +116,7 @@ def endlevel(screen):
     text_coord = screen.get_height() - tile_height
     screen.blit(fon, (0, text_coord))
     font = pygame.font.Font(None, 30)
-    line = 'Поздравляю! Для перехода на следующий уровень нажмите "SPACE"'
+    line = 'Congratulations! Press [SPACE] to start a new level.'
     string_rendered = font.render(line, 1, pygame.Color('white'))
     text_rect = string_rendered.get_rect()
     text_rect.top = text_coord + 16
@@ -135,9 +135,21 @@ if __name__ == '__main__':
     empty = Tile('empty', 0, 0)
 
     pygame.init()
-    pygame.display.set_caption('ball escape')
+    pygame.display.set_caption('Help the mouse')
     size = width, height = 1000, 1000
     screen = pygame.display.set_mode(size)
+
+    #Заставка
+    screen.blit(pygame.image.load('title.png'), (0, 0))
+    pygame.display.flip()
+    start = False
+    while not start:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    start = True
 
     current_level = 1
     max_level = 2
