@@ -2,12 +2,12 @@ import sys
 import pygame
 
 tile_images = {
-    'wall': pygame.image.load('wall.png'),
-    'empty': pygame.image.load('grass2.png'),
-    'hole': pygame.image.load('hole2.png')
+    'wall': pygame.image.load('res/img/wall.png'),
+    'empty': pygame.image.load('res/img/grass.png'),
+    'hole': pygame.image.load('res/img/hole.png')
 }
-ball_image = pygame.image.load('mouse.png')
-ball_in_hole_image = pygame.image.load('mouse_in_hole.png')
+ball_image = pygame.image.load('res/img/mouse.png')
+ball_in_hole_image = pygame.image.load('res/img/mouse_in_hole.png')
 
 tile_width = tile_height = 50
 
@@ -112,7 +112,7 @@ def movement(obj, direction, step, walls, holes):
         return ball_in_hole
 
 def endlevel(screen):
-    fon = pygame.transform.scale(pygame.image.load('fon.png'), (screen.get_width(), tile_height))
+    fon = pygame.transform.scale(pygame.image.load('res/img/fon.png'), (screen.get_width(), tile_height))
     text_coord = screen.get_height() - tile_height
     screen.blit(fon, (0, text_coord))
     font = pygame.font.Font(None, 30)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
 
     #Заставка
-    screen.blit(pygame.image.load('title.png'), (0, 0))
+    screen.blit(pygame.image.load('res/img/title.png'), (0, 0))
     pygame.display.flip()
     start = False
     while not start:
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     max_level = 2
     success = False
 
-    new_ball = generate_level(load_level('map1.txt'), screen)
+    new_ball = generate_level(load_level('res/maps/map1.txt'), screen)
     pygame.display.flip()
 
     clock = pygame.time.Clock()
@@ -184,7 +184,7 @@ if __name__ == '__main__':
                         current_level += 1
                         if current_level > max_level:
                             current_level = 1
-                        new_ball = generate_level(load_level('map' + str(current_level) + '.txt'), screen)
+                        new_ball = generate_level(load_level('res/maps/map' + str(current_level) + '.txt'), screen)
                         pygame.display.flip()
                         success = False
 
