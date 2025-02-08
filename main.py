@@ -111,17 +111,20 @@ def movement(obj, direction, step, walls, holes):
 
         return ball_in_hole
 
-def endlevel(screen):
-    fon = pygame.transform.scale(pygame.image.load('res/img/fon.png'), (screen.get_width(), tile_height))
-    text_coord = screen.get_height() - tile_height
-    screen.blit(fon, (0, text_coord))
-    font = pygame.font.Font(None, 30)
-    line = 'Congratulations! Press [SPACE] to start a new level.'
-    string_rendered = font.render(line, 1, pygame.Color('white'))
-    text_rect = string_rendered.get_rect()
-    text_rect.top = text_coord + 16
-    text_rect.x = 10
-    screen.blit(string_rendered, text_rect)
+def endlevel(screen, the_end):
+    if not the_end:
+        fon = pygame.transform.scale(pygame.image.load('res/img/fon.png'), (screen.get_width(), tile_height))
+        text_coord = screen.get_height() - tile_height
+        screen.blit(fon, (0, text_coord))
+        font = pygame.font.Font(None, 30)
+        line = 'Congratulations! Press [SPACE] to start a new level.'
+        string_rendered = font.render(line, 1, pygame.Color('white'))
+        text_rect = string_rendered.get_rect()
+        text_rect.top = text_coord + 16
+        text_rect.x = 10
+        screen.blit(string_rendered, text_rect)
+    else:
+        screen.blit(pygame.image.load('res/img/end.png'), (0, 0))
     pygame.display.flip()
 
 def terminate():
@@ -152,7 +155,7 @@ if __name__ == '__main__':
                     start = True
 
     current_level = 1
-    max_level = 2
+    max_level = 5
     success = False
 
     new_ball = generate_level(load_level('res/maps/map1.txt'), screen)
@@ -178,7 +181,7 @@ if __name__ == '__main__':
                     elif event.key == pygame.K_DOWN:
                         success = movement(new_ball, 'down', tile_height, walls_group, holes_group)
                     if success:
-                        endlevel(screen)
+                        endlevel(screen, current_level == max_level)
                 else:
                     if event.key == pygame.K_SPACE:
                         current_level += 1
